@@ -9,7 +9,6 @@ import github.simon.pathfinding.Node;
 import github.simon.pathfinding.NodeMap;
 import github.simon.pathfinding.Path;
 import github.simon.pathfinding.algorithms.Pathfinder;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
