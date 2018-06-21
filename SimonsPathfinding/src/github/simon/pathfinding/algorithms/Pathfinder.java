@@ -39,7 +39,23 @@ public abstract class Pathfinder <T extends Node> {
     }
     
     public boolean sameCoords (T t1, T t2) {
+        if (t1==null || t2==null) return false;
         return t1.getX()==t2.getX() && t1.getY()==t2.getY();
+    }
+    
+    protected Path<T> reconstructPath (final Path path, T last) {
+        path.addStep(last);
+        
+        T current;
+        T predecessor = (T) last.getPredecessor();
+        while (predecessor != null) {
+            path.addStep(predecessor);
+            current = predecessor;
+            predecessor = (T) current.getPredecessor();
+        }
+        
+        // path is reversed!!!
+        return path;
     }
     
 }

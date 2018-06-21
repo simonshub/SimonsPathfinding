@@ -5,7 +5,6 @@
  */
 package test;
 
-import github.simon.pathfinding.Node;
 import github.simon.pathfinding.NodeMap;
 import java.util.ArrayList;
 import java.util.List;

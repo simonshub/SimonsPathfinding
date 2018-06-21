@@ -8,11 +8,11 @@ package github.simon.pathfinding.algorithms.greedy;
 import github.simon.pathfinding.Node;
 import github.simon.pathfinding.NodeMap;
 import github.simon.pathfinding.Path;
-import github.simon.pathfinding.algorithms.Direction;
 import github.simon.pathfinding.algorithms.Pathfinder;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.PriorityQueue;
+import java.util.Set;
 
 /**
  *
@@ -22,37 +22,38 @@ import java.util.stream.Collectors;
 public class GreedyPathfinder<T extends Node> extends Pathfinder<T> {
 
     @Override
-    public Path<T> findPath (NodeMap<T> nodemap, int start_x, int start_y, int end_x, int end_y, int max_attempts) {
+    public Path<T> findPath (NodeMap<T> nodemap, int start_x, int start_y, int goal_x, int goal_y, int max_attempts) {
         T start = nodemap.getNode(start_x, start_y);
-        T end = nodemap.getNode(end_x, end_y);
+        T goal = nodemap.getNode(goal_x, goal_y);
         
-        int attempt_counter = 0;
-        boolean diagonal = nodemap.allowDiagonal();
-        List<T> frontiers = new ArrayList<> ();
+        Path<T> result = new Path (start, goal);
         
-        frontiers.add(start);
+        PriorityQueue<T> openNodes = new PriorityQueue<> ();
+        Set<T> closedNodes = new HashSet<> ();
         
-        Path result = new Path (start, end);
-        if (sameCoords(start, end))
-            return result;
+        openNodes.add(start);
         
-        T current = start;
-        while (!sameCoords(current,end) && attempt_counter<max_attempts) {
-            List<Direction> directions = Direction.getSuggestedDirections(current, end, diagonal);
+        while (!openNodes.isEmpty()) {
+            T current = openNodes.poll();
             
-            for (Direction dir : directions) {
-                T newnode = nodemap.getNode(current.getX()+dir.X, current.getY()+dir.Y);
-                if (newnode!=null && !newnode.isBlocked()) {
-                    frontiers.add(newnode);
+            if (current==null)
+                return null;
+            
+            if (sameCoords(current, goal))
+                return reconstructPath (result, current);
+            
+            closedNodes.add(current);
+            
+            List<T> neighbours = (List<T>) current.getNeighbours(nodemap);
+            for (T neighbour : neighbours) {
+                if (!closedNodes.contains(neighbour) && !openNodes.contains(neighbour) && !neighbour.isBlocked()) {
+                    neighbour.setPredecessor(current);
+                    openNodes.add(neighbour);
                 }
             }
-            
-            frontiers = frontiers.stream().sorted( (t1,t2) -> (int)(t2.getCost() - t1.getCost()) ).collect(Collectors.toList());
-            
-            attempt_counter++;
         }
         
-        return result;
+        return null;
     }
     
 }

@@ -24,7 +24,6 @@ public class Path <T extends Node> {
         this.start = start;
         this.goal = goal;
         this.steps = new ArrayList<> ();
-        this.steps.add(start);
     }
     
     

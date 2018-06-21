@@ -5,18 +5,48 @@
  */
 package github.simon.pathfinding;
 
+import github.simon.pathfinding.algorithms.Direction;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author btb
  */
-public interface Node {
+public abstract class Node implements Comparable<Node> {
     
-    public int getX ();
+    public abstract int getX ();
     
-    public int getY ();
+    public abstract int getY ();
     
-    public double getCost ();
+    public abstract double getCost ();
     
-    public boolean isBlocked ();
+    public abstract boolean isBlocked ();
+    
+    
+    
+    private Node predecessor=null;
+    
+    public void setPredecessor (Node predecessor) {
+        this.predecessor = predecessor;
+    }
+    
+    public Node getPredecessor () {
+        return predecessor;
+    }
+    
+    public List<? extends Node> getNeighbours (NodeMap<? extends Node> map) {
+        List<Node> results = new ArrayList<> ();
+        
+        for (Direction dir : Direction.values()) {
+            if ( map.allowDiagonal() || (!map.allowDiagonal() && !dir.DIAGONAL) ) {
+                Node neighbour = map.getNode(getX()+dir.X , getY()+dir.Y);
+                if (neighbour != null)
+                    results.add(neighbour);
+            }
+        }
+        
+        return results;
+    }
     
 }

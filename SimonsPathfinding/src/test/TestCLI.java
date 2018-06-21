@@ -5,7 +5,6 @@
  */
 package test;
 
-import github.simon.pathfinding.Node;
 import github.simon.pathfinding.Path;
 import github.simon.pathfinding.algorithms.Pathfinder;
 import github.simon.pathfinding.algorithms.greedy.GreedyPathfinder;
@@ -14,7 +13,7 @@ import github.simon.pathfinding.algorithms.greedy.GreedyPathfinder;
  *
  * @author btb
  */
-public class Test {
+public class TestCLI {
     
     public static void main (String... vargs) {
         
