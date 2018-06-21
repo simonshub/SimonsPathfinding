@@ -7,6 +7,7 @@ package test;
 
 import github.simon.pathfinding.NodeMap;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -71,6 +72,11 @@ public class SomeNodeMapImpl implements NodeMap<SomeNodeImpl> {
         }
         
         return contents;
+    }
+
+    @Override
+    public Comparator<SomeNodeImpl> getOpenNodeSorter() {
+        return (SomeNodeImpl o1, SomeNodeImpl o2) -> (int) (o2.getCost(null) - o1.getCost(null));
     }
     
 }

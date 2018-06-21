@@ -36,31 +36,18 @@ public class SomeNodeImpl extends Node {
     }
 
     @Override
-    public double getCost() {
+    public double getCost(Node previous) {
         return difficulty;
     }
 
     @Override
     public boolean isBlocked() {
-        return difficulty >= 0.8;
+        return difficulty >= 0.6;
     }
     
     @Override
     public String toString () {
         return String.format("[%2d,%2d] "+ (isBlocked() ? "--" : "%2d"), x, y, (int)(difficulty*100f));
-    }
-
-    @Override
-    public int compareTo (Node n) {
-        return (int)(this.getCost()*100f - n.getCost()*100f);
-        
-//        if (this.getCost() < n.getCost()) {
-//            return -1;
-//        } else if (this.getCost() > n.getCost()) {
-//            return 1;
-//        } else {
-//            return 0;
-//        }
     }
     
 }

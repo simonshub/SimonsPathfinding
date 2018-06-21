@@ -13,13 +13,13 @@ import java.util.List;
  *
  * @author btb
  */
-public abstract class Node implements Comparable<Node> {
+public abstract class Node {
     
     public abstract int getX ();
     
     public abstract int getY ();
     
-    public abstract double getCost ();
+    public abstract double getCost (Node previous);
     
     public abstract boolean isBlocked ();
     

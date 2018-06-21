@@ -9,6 +9,7 @@ import github.simon.pathfinding.Node;
 import github.simon.pathfinding.NodeMap;
 import github.simon.pathfinding.Path;
 import github.simon.pathfinding.algorithms.Pathfinder;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -22,18 +23,22 @@ import java.util.Set;
 public class GreedyPathfinder<T extends Node> extends Pathfinder<T> {
 
     @Override
-    public Path<T> findPath (NodeMap<T> nodemap, int start_x, int start_y, int goal_x, int goal_y, int max_attempts) {
+    public Path<T> findPath (NodeMap<T> nodemap, int start_x, int start_y, int goal_x, int goal_y, long max_duration) {
         T start = nodemap.getNode(start_x, start_y);
         T goal = nodemap.getNode(goal_x, goal_y);
         
         Path<T> result = new Path (start, goal);
         
-        PriorityQueue<T> openNodes = new PriorityQueue<> ();
+        PriorityQueue<T> openNodes = new PriorityQueue<> (nodemap.getOpenNodeSorter());
         Set<T> closedNodes = new HashSet<> ();
         
         openNodes.add(start);
         
+        long start_time = System.currentTimeMillis();
         while (!openNodes.isEmpty()) {
+            if (System.currentTimeMillis() - start_time > max_duration)
+                return null;
+            
             T current = openNodes.poll();
             
             if (current==null)

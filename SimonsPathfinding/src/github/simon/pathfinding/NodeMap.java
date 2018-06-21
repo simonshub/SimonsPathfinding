@@ -5,6 +5,8 @@
  */
 package github.simon.pathfinding;
 
+import java.util.Comparator;
+
 /**
  *
  * @author btb
@@ -17,6 +19,8 @@ public interface NodeMap <T extends Node> {
     public int getSizeY ();
     
     public T getNode (int x, int y);
+    
+    public Comparator<T> getOpenNodeSorter ();
     
     public boolean allowDiagonal ();
     

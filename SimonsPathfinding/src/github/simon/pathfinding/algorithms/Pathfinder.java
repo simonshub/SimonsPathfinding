@@ -18,7 +18,7 @@ import java.util.Set;
  */
 public abstract class Pathfinder <T extends Node> {
     
-    public abstract Path<T> findPath (NodeMap<T> nodemap, int start_x, int start_y, int end_x, int end_y, int max_attempts);
+    public abstract Path<T> findPath (NodeMap<T> nodemap, int start_x, int start_y, int end_x, int end_y, long max_time);
     
     
     
@@ -43,7 +43,7 @@ public abstract class Pathfinder <T extends Node> {
         return t1.getX()==t2.getX() && t1.getY()==t2.getY();
     }
     
-    protected Path<T> reconstructPath (final Path path, T last) {
+    protected Path<T> reconstructPath (final Path<T> path, T last) {
         path.addStep(last);
         
         T current;
@@ -52,6 +52,8 @@ public abstract class Pathfinder <T extends Node> {
             path.addStep(predecessor);
             current = predecessor;
             predecessor = (T) current.getPredecessor();
+            if (sameCoords(predecessor, path.getStart()))
+                break;
         }
         
         // path is reversed!!!

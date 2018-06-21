@@ -17,13 +17,13 @@ public class TestCLI {
     
     public static void main (String... vargs) {
         
-        SomeNodeMapImpl map = new SomeNodeMapImpl(100, 100);
+        SomeNodeMapImpl map = new SomeNodeMapImpl(800, 400);
         
-        System.out.println("Test Map:\n\n"+map.toString());
+//        System.out.println("Test Map:\n\n"+map.toString());
         
         Pathfinder<SomeNodeImpl> pf = new GreedyPathfinder ();
         long start = System.currentTimeMillis();
-        Path<SomeNodeImpl> path = pf.findPath(map, 0, 0, 90, 90, 100);
+        Path<SomeNodeImpl> path = pf.findPath(map, 0, 0, 200, 200, 5000);
         long end = System.currentTimeMillis();
         
         System.out.println(String.format("Pathfinding finished in %.6f sec", ( (end-start) / 1000f )));

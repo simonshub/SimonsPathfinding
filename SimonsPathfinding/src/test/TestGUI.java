@@ -5,6 +5,7 @@
  */
 package test;
 
+import github.simon.pathfinding.Node;
 import github.simon.pathfinding.Path;
 import github.simon.pathfinding.algorithms.Pathfinder;
 import github.simon.pathfinding.algorithms.greedy.GreedyPathfinder;
@@ -23,8 +24,8 @@ import javax.swing.table.TableModel;
  */
 public class TestGUI extends javax.swing.JFrame {
 
-    public static final int MAP_HEIGHT = 100;
-    public static final int MAP_WIDTH = 100;
+    public static final int MAP_HEIGHT = 20;
+    public static final int MAP_WIDTH = 20;
     public static final int NODE_SIZE = 16;
     
     /**
@@ -37,7 +38,7 @@ public class TestGUI extends javax.swing.JFrame {
         
         Pathfinder<SomeNodeImpl> pf = new GreedyPathfinder ();
         long start = System.currentTimeMillis();
-        Path<SomeNodeImpl> path = pf.findPath(map, 0, 0, 96, 98, 100);
+        Path<SomeNodeImpl> path = pf.findPath(map, 0, 0, 16, 18, 3000);
         long end = System.currentTimeMillis();
         
         if (path==null)
@@ -71,8 +72,8 @@ public class TestGUI extends javax.swing.JFrame {
 
             @Override
             public Object getValueAt(int rowIndex, int columnIndex) {
-                double cost = map.getNode(columnIndex, rowIndex).getCost();
-                return cost>=0.8 ? "--" : (int)(cost*100f);
+                Node node = map.getNode(columnIndex, rowIndex);
+                return node.isBlocked() ? "--" : (int)(node.getCost(null)*100f);
             }
 
             @Override
