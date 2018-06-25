@@ -5,6 +5,7 @@
  */
 package github.simon.pathfinding.algorithms;
 
+import github.simon.pathfinding.algorithms.directional.Direction;
 import github.simon.pathfinding.Node;
 import github.simon.pathfinding.NodeMap;
 import github.simon.pathfinding.Path;
@@ -18,7 +19,7 @@ import java.util.Set;
  */
 public abstract class Pathfinder <T extends Node> {
     
-    public abstract Path<T> findPath (NodeMap<T> nodemap, int start_x, int start_y, int end_x, int end_y, long max_time);
+    public abstract Path<T> findPath (NodeMap<T> nodemap, int start_x, int start_y, int goal_x, int goal_y, long max_duration);
     
     
     

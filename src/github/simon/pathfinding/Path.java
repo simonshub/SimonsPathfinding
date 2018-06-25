@@ -6,7 +6,12 @@
 package github.simon.pathfinding;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -16,20 +21,28 @@ import java.util.List;
 public class Path <T extends Node> {
     
     private final T start, goal;
-    private final List<T> steps;
+    private final Map<Integer,T> steps;
     
     
     
     public Path (T start, T goal) {
         this.start = start;
         this.goal = goal;
-        this.steps = new ArrayList<> ();
+        this.steps = new HashMap<> ();
     }
     
     
     
     public List<T> getAllSteps () {
-        return steps;
+        List<T> step_list = new ArrayList<> ();
+        for (int i=0;i<steps.size();i++) {
+            step_list.add(steps.get(i));
+        }
+        return step_list;
+    }
+    
+    public Set<T> getAllUniqueSteps () {
+        return new HashSet<> (steps.values());
     }
     
     public T getStart () {
@@ -41,6 +54,10 @@ public class Path <T extends Node> {
     }
     
     public T getStep (int index) {
+        if (index<0 || index>=steps.size()) {
+            throw new IndexOutOfBoundsException ("Path step index "+index+" is incorrect; size="+steps.size());
+        }
+        
         return steps.get(index);
     }
     
@@ -51,8 +68,12 @@ public class Path <T extends Node> {
         return steps.get(steps.size()-1);
     }
     
-    public void addStep (T step) {
-        steps.add(step);
+    public boolean addStep (T step) {
+        if (!steps.containsValue(step)) {
+            steps.put(steps.size(), step);
+            return true;
+        }
+        return false;
     }
     
 }

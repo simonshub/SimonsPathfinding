@@ -8,7 +8,7 @@ package test;
 import github.simon.pathfinding.Node;
 import github.simon.pathfinding.Path;
 import github.simon.pathfinding.algorithms.Pathfinder;
-import github.simon.pathfinding.algorithms.greedy.GreedyPathfinder;
+import github.simon.pathfinding.algorithms.directional.DirectionalPathfinder;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -36,7 +36,7 @@ public class TestGUI extends javax.swing.JFrame {
         
         SomeNodeMapImpl map = new SomeNodeMapImpl(MAP_WIDTH, MAP_HEIGHT);
         
-        Pathfinder<SomeNodeImpl> pf = new GreedyPathfinder ();
+        Pathfinder<SomeNodeImpl> pf = new DirectionalPathfinder ();
         long start = System.currentTimeMillis();
         Path<SomeNodeImpl> path = pf.findPath(map, 0, 0, 16, 18, 3000);
         long end = System.currentTimeMillis();

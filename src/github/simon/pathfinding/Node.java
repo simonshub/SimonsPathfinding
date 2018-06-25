@@ -5,7 +5,7 @@
  */
 package github.simon.pathfinding;
 
-import github.simon.pathfinding.algorithms.Direction;
+import github.simon.pathfinding.algorithms.directional.Direction;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +19,7 @@ public abstract class Node {
     
     public abstract int getY ();
     
-    public abstract double getCost (Node previous);
+    public abstract double getCost (final Node previous);
     
     public abstract boolean isBlocked ();
     
@@ -35,18 +35,34 @@ public abstract class Node {
         return predecessor;
     }
     
-    public List<? extends Node> getNeighbours (NodeMap<? extends Node> map) {
+    public List<? extends Node> getNeighbours (final NodeMap<? extends Node> map) {
         List<Node> results = new ArrayList<> ();
         
         for (Direction dir : Direction.values()) {
             if ( map.allowDiagonal() || (!map.allowDiagonal() && !dir.DIAGONAL) ) {
-                Node neighbour = map.getNode(getX()+dir.X , getY()+dir.Y);
+                Node neighbour = neighbour(map, dir);
                 if (neighbour != null)
                     results.add(neighbour);
             }
         }
         
         return results;
+    }
+    
+    public final Node neighbour (final NodeMap<? extends Node> map, Direction direction) {
+        return map.getNode(getX()+direction.X , getY()+direction.Y);
+    }
+    
+    
+    
+    @Override
+    public boolean equals (Object obj) {
+        try {
+            Node node = (Node)obj;
+            return node.getX()==getX() && node.getY()==getY();
+        } catch (ClassCastException ex) {
+            return false;
+        }
     }
     
 }

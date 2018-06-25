@@ -42,7 +42,8 @@ public class SomeNodeImpl extends Node {
 
     @Override
     public boolean isBlocked() {
-        return difficulty >= 0.6;
+        return false;
+//        return difficulty >= 0.8;
     }
     
     @Override

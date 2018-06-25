@@ -76,7 +76,7 @@ public class SomeNodeMapImpl implements NodeMap<SomeNodeImpl> {
 
     @Override
     public Comparator<SomeNodeImpl> getOpenNodeSorter() {
-        return (SomeNodeImpl o1, SomeNodeImpl o2) -> (int) (o2.getCost(null) - o1.getCost(null));
+        return (SomeNodeImpl o1, SomeNodeImpl o2) -> (int) (o1.getCost(null) - o2.getCost(null));
     }
     
 }

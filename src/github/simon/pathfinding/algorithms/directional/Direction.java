@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package github.simon.pathfinding.algorithms;
+package github.simon.pathfinding.algorithms.directional;
 
 import github.simon.pathfinding.Node;
 import java.util.ArrayList;
@@ -19,10 +19,10 @@ public enum Direction {
     LEFT        (false,-1,0),
     RIGHT       (false,1,0),
     
-    UP_LEFT     (true,-1,1),
-    UP_RIGHT    (true,1,1),
-    DOWN_LEFT   (true,-1,-1),
-    DOWN_RIGHT  (true,1,-1),
+    UP_LEFT     (true,-1,-1),
+    UP_RIGHT    (true,1,-1),
+    DOWN_LEFT   (true,-1,1),
+    DOWN_RIGHT  (true,1,1),
     
     ;
     
@@ -88,6 +88,28 @@ public enum Direction {
             
             if (diagonal_direction!=null)
                 result.add(diagonal_direction);
+        }
+        
+        // if a single direction was determined, add it's neighbouring directions as well
+        if (result.size()==1) {
+            // diagonal directions
+            if (diagonal) {
+                Direction straight = result.get(0);
+                for (Direction dir : Direction.values()) {
+                    if (dir.DIAGONAL && ( (dir.X==straight.X) || (dir.Y==straight.Y) )) {
+                        result.add(dir);
+                    }
+                }
+            // non-diagonal directions
+            } else {
+                Direction straight = result.get(0);
+                
+                for (Direction dir : Direction.values()) {
+                    if (!dir.DIAGONAL && !( (dir.X==-straight.X) && (dir.Y==-straight.Y) )) {
+                        result.add(dir);
+                    }
+                }
+            }
         }
         
         return result;
