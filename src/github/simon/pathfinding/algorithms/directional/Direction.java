@@ -92,20 +92,11 @@ public enum Direction {
         
         // if a single direction was determined, add it's neighbouring directions as well
         if (result.size()==1) {
-            // diagonal directions
+            // only works with diagonal directions!!!
             if (diagonal) {
                 Direction straight = result.get(0);
                 for (Direction dir : Direction.values()) {
                     if (dir.DIAGONAL && ( (dir.X==straight.X) || (dir.Y==straight.Y) )) {
-                        result.add(dir);
-                    }
-                }
-            // non-diagonal directions
-            } else {
-                Direction straight = result.get(0);
-                
-                for (Direction dir : Direction.values()) {
-                    if (!dir.DIAGONAL && !( (dir.X==-straight.X) && (dir.Y==-straight.Y) )) {
                         result.add(dir);
                     }
                 }

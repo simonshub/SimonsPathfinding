@@ -25,7 +25,7 @@ import javax.swing.table.TableModel;
 public class TestGUI extends javax.swing.JFrame {
 
     public static final int MAP_HEIGHT = 20;
-    public static final int MAP_WIDTH = 20;
+    public static final int MAP_WIDTH = 40;
     public static final int NODE_SIZE = 16;
     
     /**
@@ -38,7 +38,7 @@ public class TestGUI extends javax.swing.JFrame {
         
         Pathfinder<SomeNodeImpl> pf = new DirectionalPathfinder ();
         long start = System.currentTimeMillis();
-        Path<SomeNodeImpl> path = pf.findPath(map, 0, 0, 16, 18, 3000);
+        Path<SomeNodeImpl> path = pf.findPath(map, 0, 0, 36, 18, 3000);
         long end = System.currentTimeMillis();
         
         if (path==null)
