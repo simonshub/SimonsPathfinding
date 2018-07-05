@@ -11,7 +11,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  *
@@ -74,6 +73,14 @@ public class Path <T extends Node> {
             return true;
         }
         return false;
+    }
+    
+    @Override
+    public boolean equals (Object o) {
+        if (o instanceof Path) {
+            return ( ((Path) o).getStart().equals( start ) || ((Path) o).getStart().equals( goal ) ) &&
+                   ( ((Path) o).getGoal().equals( start ) || ((Path) o).getGoal().equals( goal ) );
+        } else return false;
     }
     
 }
